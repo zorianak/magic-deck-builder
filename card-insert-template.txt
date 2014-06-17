@@ -1,0 +1,1 @@
+db.creaturecards.insert({"name" : "Kraul Warrior", "cost" : "2", "black" : "0", "blue" : "0", "green" : "1", "red" : "0", "white" : "0", "text" : "5G: Kraul Warrior gets +3/+3 until end of turn", "power" : "2", "toughness" : "2", "rarity" : "Common"})
