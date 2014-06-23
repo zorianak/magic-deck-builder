@@ -4,11 +4,9 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-// talk to mongo
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/magic-deck-builder');
+// Database
+var mongo = require('mongoskin');
+var db = mongo.db("mongodb://localhost:27017/magic-deck-builder", {native_parser:true});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
