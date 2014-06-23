@@ -9,6 +9,9 @@ $(document).ready(function() {
     
     // Cardname link click
     $('#cardList table tbody').on('click', 'td a.linkshowcard', showCardInfo);
+    
+    // Add Card button click
+    $('#btnAddCard').on('click', addCard);
 
 });
 
@@ -62,4 +65,59 @@ function showCardInfo(event) {
     $('#cardInfoPower').text(thisCardObject.power);
     $('#cardInfoToughness').text(thisCardObject.toughness);
 
+};
+
+// Add Card
+function addCard(event) {
+    event.preventDefault();
+
+    // Super basic validation - increase errorCount variable if any fields are blank
+    var errorCount = 0;
+    $('#addCard input').each(function(index, val) {
+        if($(this).val() === '') { errorCount++; }
+    });
+
+    // Check and make sure errorCount's still at zero
+    if(errorCount === 0) {
+
+        // If it is, compile all user info into one object
+        var newCard = {
+            'name': $('#addCard fieldset input#inputCardName').val(),
+            'rarity': $('#addCard fieldset input#inputCardRarity').val(),
+            'cost': $('#addCard fieldset input#inputCardCost').val(),
+            'power': $('#addCard fieldset input#inputCardPower').val(),
+            'toughness': $('#addCard fieldset input#inputCardToughness').val()
+        }
+
+        // Use AJAX to post the object to our adduser service
+        $.ajax({
+            type: 'POST',
+            data: newCard,
+            url: '/users/addcard',
+            dataType: 'JSON'
+        }).done(function( response ) {
+
+            // Check for successful (blank) response
+            if (response.msg === '') {
+
+                // Clear the form inputs
+                $('#addCard fieldset input').val('');
+
+                // Update the table
+                populateTable();
+
+            }
+            else {
+
+                // If something goes wrong, alert the error message that our service returned
+                alert('Error: ' + response.msg);
+
+            }
+        });
+    }
+    else {
+        // If errorCount is more than 0, error out
+        alert('Please fill in all fields');
+        return false;
+    }
 };
