@@ -30,6 +30,6 @@ function populateTable() {
         });
 
         // Inject the whole content string into our existing HTML table
-        $('#cardrList table tbody').html(tableContent);
+        $('#cardList table tbody').html(tableContent);
     });
 };
