@@ -21,4 +21,15 @@ router.post('/addcard', function(req, res) {
     });
 });
 
+/*
+ * DELETE to deletecard.
+ */
+router.delete('/deletecard/:id', function(req, res) {
+    var db = req.db;
+    var cardToDelete = req.params.id;
+    db.collection('creaturecards').removeById(cardToDelete, function(err, result) {
+        res.send((result === 1) ? { msg: '' } : { msg:'error: ' + err });
+    });
+});
+
 module.exports = router;
