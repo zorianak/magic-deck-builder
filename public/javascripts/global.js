@@ -1,11 +1,8 @@
-// Cardlist data array for filling in info box
-var cardListData = [];
-
 // DOM Ready =============================================================
 $(document).ready(function() {
 
     // Populate the user table on initial page load
-    populateTable();
+    populateTable('all');
     
     // Cardname link click
     $('#cardList table tbody').on('click', 'td a.linkshowcard', showCardInfo);
@@ -20,33 +17,78 @@ $(document).ready(function() {
 
 // Functions =============================================================
 
+function cardFactory() {
+//    // jQuery AJAX call for JSON
+//    $.getJSON( '/cards/cardlist', function( data ) {
+//        // Stick our card data array into a cardlist variable in the global object
+//        var cardListData = data;
+//        
+//        // For each item in our JSON, add a table row and cells to the content string
+//        // We also want to determine the color(s) of the cards
+//        $.each(data, function(){
+//            console.log('cardFactory this: ' + this);
+//            // make a new card for each item
+//            Card.createCard(this);
+//        });
+//    });
+};
+
+function byColor(color) {
+    
+};
+
 // Fill table with data
-function populateTable() {
-
-    // Empty content string
+function populateTable(cardType) {
+    // the table things will go into
+    var cardListTable = $('#cardList tbody');
+                          
+    // String we will be inserting into our table
+    var tableTemplate = '<tr>';
+        tableTemplate += '<td><a href="#" class="linkshowcard" rel="<cardname>" title="Show Details"><cardname></a></td>';
+        tableTemplate += '<td><rarity></td>';
+        tableTemplate += '<td><colors></td>';
+        tableTemplate += '<td><a href="#" class="linkdeletecard" rel="<id>">delete</a></td>';
+        tableTemplate += '</tr>';
+    
     var tableContent = '';
+    
+    if(cardType === 'all') {
+        console.log('all');
+        $.getJSON( '/cards/cardlist', function( data ) {
+            // Stick our card data array into a cardlist variable in the global object
+            var cardListData = data;
+            
+            // using 'this' gets kind of confusing.
+            var self = this;
 
-    // jQuery AJAX call for JSON
-    $.getJSON( '/cards/cardlist', function( data ) {
-        // Stick our card data array into a cardlist variable in the global object
-        cardListData = data;
-        
-        // For each item in our JSON, add a table row and cells to the content string
-        // We also want to determine the color(s) of the cards
-        $.each(data, function(){
-            // get the color of the cards?
-            var color = Card.getCardColor(this);
-            tableContent += '<tr>';
-            tableContent += '<td><a href="#" class="linkshowcard" rel="' + this.name + '" title="Show Details">' + this.name + '</a></td>';
-            tableContent += '<td>' + this.rarity + '</td>';
-            tableContent += '<td>' + color + '</td>';
-            tableContent += '<td><a href="#" class="linkdeletecard" rel="' + this._id + '">delete</a></td>';
-            tableContent += '</tr>';
+            // For each item in our JSON, add a table row and cells to the content string
+            // We also want to determine the color(s) of the cards
+            $.each(data, function(){
+                console.log(this.name);
+                var theCard = Card.createCard(this);
+                console.log(theCard);
+                
+                if ( theCard !== -1) {
+                    console.log('cardFactory this: ' + theCard.name);
+
+                    // replace everything from the table template and push it into a temporary one
+                    var tempTemplate = tableTemplate.replace(/<cardname>/g, theCard.name)
+                                .replace('<rarity>', theCard.rarity)
+                                .replace('<colors>', theCard.color)
+                                .replace('<id>', theCard.id);
+                    
+                    
+                    // the temporary one will now be put into our big string to add to the table
+                    tableContent += tempTemplate;
+                }
+                
+                
+            });
+            
+            // done looping data, let's populate our table
+            cardListTable.html(tableContent);
         });
-
-        // Inject the whole content string into our existing HTML table
-        $('#cardList table tbody').html(tableContent);
-    });
+    }
 };
 
 // Show User Info
@@ -56,7 +98,7 @@ function showCardInfo(event) {
     // Prevent Link from Firing
     event.preventDefault();
 
-    // Retrieve username from link rel attribute
+    // Retrieve cardname from link rel attribute
     var thisCardName = $(this).attr('rel');
 
     // Get Index of object based on id value

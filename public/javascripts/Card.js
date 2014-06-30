@@ -4,11 +4,12 @@ var s,
         Cards will overwrite this!
         ****/
         settings: {
+            cardname:'',
             power:0,
             toughness:0,
             rarity:0,
             name:0,
-            color:0
+            color:[]
         },
         
         init: function() {
@@ -28,7 +29,7 @@ var s,
                 // If they did, do our delete
                 $.ajax({
                     type: 'DELETE',
-                    url: '/users/deletecard/' + $(this).attr('rel')
+                    url: '/card/deletecard/' + $(this).attr('rel')
                 }).done(function( response ) {
 
                     // Check for a successful (blank) response
@@ -52,6 +53,26 @@ var s,
             }
         },
         
+        createCard : function(theCard) {
+            var self = this;
+            
+            if (theCard.name !== undefined ) {
+
+                self.settings.cardname = theCard.name;
+                self.settings.power = theCard.power;
+                self.settings.rarity = theCard.rarity;
+                self.settings.toughness = theCard.toughness;
+                self.settings.color = Card.getCardColor(theCard).slice(0);
+                
+                console.log('color ' + self.settings.color);
+
+                return theCard;
+            } else {
+                return -1;
+            }
+            
+        },
+        
         /********
         This will figure out the color of the card, and return the color property.
         Note that some cards can be colorless, and others can have more than one color.
@@ -59,8 +80,7 @@ var s,
         getCardColor : function(theCard) {
             // so we can either check for a certain color to be there (meaning we don't have to put them
             // all in the DB... or we can loop through a set array...
-            var self = theCard;
-            var color = [];
+            var self = this;
             
             // So in the DB, it's set as 0s for colors it doesn't have... Perhaps, though, one isn't set.
             // Two ways to handle that. We have set colors, so we can enumerate that
@@ -71,15 +91,17 @@ var s,
             // as it seems it handles well with just checking against the array.
             for (var i = 0; i < possibleColors.length; i++) {
                 if(theCard[possibleColors[i]] === '1' ) {
-                    color += possibleColors[i];
+                    console.log('potato');
+                    self.settings.color.push(possibleColors[i]);
                 } 
             }
             
-            // now we want to return the colors we got, if any
-            if (color.length > 0) {
-                return color;
-            } else {
-                return 'colorless';
+            // Set the color setting now for this object
+            if (self.settings.color.length < 0) {
+                self.settings.color.push('colorless');
             }
+            
+            console.log('color ' + self.settings.color);
+            return self.settings.color;
         }
     }
