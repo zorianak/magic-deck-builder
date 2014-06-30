@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/cardlist', function(req, res) {
+/* GET cards listing. */
+router.get('/cards/cardlist', function(req, res) {
     console.log('get /cardlist');
     var db = req.db;
     db.collection('creaturecards').find().toArray(function (err, items) {

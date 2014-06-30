@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
 });
 
 /* GET Cardlist page. */
-router.get('/cards/cards', function(req, res) {
+router.get('/cards/cardlist', function(req, res) {
     console.log('get /cardlist');
     var db = req.db;
     db.collection('creaturecards').find().toArray(function (err, items) {

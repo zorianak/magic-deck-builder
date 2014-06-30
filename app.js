@@ -11,7 +11,7 @@ var db = mongo.db("mongodb://localhost:27017/magic-deck-builder", {native_parser
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var cards = require('./routes/cards/cards');
+var cards = require('./routes/cards/cardlist');
 
 var app = express();
 
@@ -34,7 +34,7 @@ app.use(function(req,res,next){
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/cards/cards', cards);
+app.use('/cards/cardlist', cards);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
