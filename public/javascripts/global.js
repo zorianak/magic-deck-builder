@@ -1,8 +1,5 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
-    
-    // initialize our Card script
-    Card.init();
 
     // Populate the user table on initial page load
     populateTable('all');
@@ -12,33 +9,10 @@ $(document).ready(function() {
     
     // Add Card button click
     $('#btnAddCard').on('click', addCard);
-    
-     // Delete Card link click
-    $('#cardList table tbody').on('click', 'td a.linkdeletecard', Card.deleteCard);
 
 });
 
-// Functions =============================================================
 
-function cardFactory() {
-//    // jQuery AJAX call for JSON
-//    $.getJSON( '/cards/cardlist', function( data ) {
-//        // Stick our card data array into a cardlist variable in the global object
-//        var cardListData = data;
-//        
-//        // For each item in our JSON, add a table row and cells to the content string
-//        // We also want to determine the color(s) of the cards
-//        $.each(data, function(){
-//            console.log('cardFactory this: ' + this);
-//            // make a new card for each item
-//            Card.createCard(this);
-//        });
-//    });
-};
-
-function byColor(color) {
-    
-};
 
 // Fill table with data
 function populateTable(cardType) {
@@ -67,7 +41,7 @@ function populateTable(cardType) {
             // For each item in our JSON, add a table row and cells to the content string
             // We also want to determine the color(s) of the cards
             $.each(data, function(){
-                console.log(this.name);
+                
                 var theCard = new Card.createCard(this);
                 console.log('theCard ');
                 console.log(theCard);
