@@ -2,7 +2,7 @@
 $(document).ready(function() {
 
     // Populate the user table on initial page load
-    CardController.populateTable('all');
+    populateTable('all');
     
     // Cardname link click
     $('#cardList table tbody').on('click', 'td a.linkshowcard', showCardInfo);
