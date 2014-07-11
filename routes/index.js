@@ -10,24 +10,29 @@ router.get('/', function(req, res) {
 router.get('/cards/cardlist', function(req, res) {
     console.log('get /cardlist');
     
+    var reqColor = req.query.color;
+    var query = {};
+    query[reqColor] = 1;
+    console.log(query);
+    
     // so test for color param
-    console.log('colorparam is set to ' + req.query.color);
+    console.log('colorparam is set to ' + reqColor);
     
     var db = req.db;
-    db.collection('creaturecards').find().toArray(function (err, items) {
-        res.json(items);
-    });
+    if(reqColor !== undefined) {
+        console.log('Color is defined.');
+        
+        db.collection('creaturecards').find(query).toArray(function (err, items) {
+            console.log(items);
+            res.json(items);
+        });
+    } else {
+        console.log('Color is undefined');
+        db.collection('creaturecards').find().toArray(function (err, items) {
+            res.json(items);
+        });
+    }
 });
 
-/* GET Colored cards listing. */
-router.get('/cards/cardlist/:blue', function(req, res) {
-    console.log('get /cardlist by color black');
-    var color = req.params.rel.split(':')[1];
-    console.log('querying for ' + color);
-    var db = req.db;
-    db.collection('creaturecards').find({color: '1'}).toArray(function (err, items) {
-        res.json(items);
-    });
-});
 
 module.exports = router;

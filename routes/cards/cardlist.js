@@ -1,16 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET cards listing. */
-router.get('/cards/cardlist', function(req, res) {
-    console.log('get /cardlist');
-    console.log(req.params.id);
-    var db = req.db;
-    db.collection('creaturecards').find().toArray(function (err, items) {
-        res.json(items);
-        console.log(items);
-    });
-});
+
 
 /*
  * POST to addcard.

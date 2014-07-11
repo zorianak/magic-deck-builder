@@ -4,6 +4,9 @@
 function populateTable(cardType) {
     // the table things will go into
     var cardListTable = $('#cardList tbody');
+    
+    // first let's clear the table if it has anything in it.
+    cardListTable.html('');
                           
     // String we will be inserting into our table
     var tableTemplate = '<tr>';

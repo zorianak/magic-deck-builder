@@ -6,10 +6,12 @@ function displayPage(goHere) {
     
     // make the url
     var theUrl = '/cards/cardlist?color=' + goHere;
-    console.log(theUrl);
+    console.log('theURL ' + theUrl);
     $.ajax({
         type: 'GET',
-        url: theUrl
+        url: theUrl,
+        dataType: 'json',
+        error: function(xhr,status,error){ alert(status); }
     }).done(function( response ) {
 
             // Check for a successful (blank) response
@@ -21,6 +23,6 @@ function displayPage(goHere) {
 
             // Update the table
             populateTable(goHere);
-
+        console.log('Updated table.');
         });
 };
