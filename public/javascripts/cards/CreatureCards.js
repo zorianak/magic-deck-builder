@@ -1,39 +1,38 @@
 // This will inherit from Card.js, and will set definitions for just creatures
 
-var CreatureCards = function(){
+var CreatureCards = function(theCard){
     // these will probably have functions written out to assign properly from JSON
-    this.name = "";
-    this.rarity = "";
-    this.power = "0";
-    this.toughness = "0";
+    this.name = theCard.name;
+    this.rarity = theCard.rarity;
+    this.power = theCard.power;
+    this.toughness = theCard.toughness;
+    this.cost = theCard.cost;
     
     this.color = function() {
-        // Ideally we will detect whether or not colors are set or not
-        // so we can either check for a certain color to be there (meaning we don't have to put them
-            // all in the DB... or we can loop through a set array...
-            var self = this;
-            
-            // So in the DB, it's set as 0s for colors it doesn't have... Perhaps, though, one isn't set.
-            // Two ways to handle that. We have set colors, so we can enumerate that
-            var possibleColors = ['blue', 'black', 'green', 'red', 'white'];
-            
-            // so we can use hasOwnProperty to loop through and see if it has those colors..
-            // hasOwnProperty DOES SUCK - and seems extraneous to test if it has that property
-            // as it seems it handles well with just checking against the array.
-            for (var i = 0; i < possibleColors.length; i++) {
+        // So we are passed theCard, which will be a JSON object
+        // that contains our values. Colors is the hardest one to 
+        // extract, because it's not defined - we have to define
+        // them individually so that we can use it properly (aka 
+        // so we can query the DB/collection by color).
+        
+        // We have 5 possible colors that have been available since
+        // the Dawn of Time, so for now we can hardcode this.
+        var possibleColors = ['blue', 'black', 'green', 'red', 'white'];
+        var possColLength = possibleColors.length;
+        
+        var colorArray = [];
+        
+        // After that, we basically want to test and see if a certain
+        // color is set.
+        for (var i = 0; i < possColLength; i++) {
                 if(theCard[possibleColors[i]] === '1' ) {
-                    console.log('potato');
-                    self.settings.color.push(possibleColors[i]);
-                } 
+                    // So if that is set to a 1 (true), we
+                    // want to add it to the card's color array
+                    colorArray.push(possibleColors[i]);
+                }
             }
-            
-            // Set the color setting now for this object
-            if (self.settings.color.length < 0) {
-                self.settings.color.push('colorless');
-            }
-            
-            console.log('color ' + self.settings.color);
-            return self.settings.color;
+        console.log('col Array ' + colorArray);
+        return colorArray;
     };
 }
 CreatureCards.prototype = new Card();

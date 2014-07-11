@@ -42,18 +42,18 @@ function populateTable(cardType) {
             // We also want to determine the color(s) of the cards
             $.each(data, function(){
                 
-                var theCard = new Card.createCard(this);
+                // so we want to basically init our creature card
+                var Card = new CreatureCards(this);
                 console.log('theCard ');
-                console.log(theCard);
+                console.log(Card.color());
                 
-                if ( theCard !== -1) {
-                    console.log('cardFactory this: ' + theCard.color);
+                if ( Card !== -1) {
 
                     // replace everything from the table template and push it into a temporary one
-                    var tempTemplate = tableTemplate.replace(/<cardname>/g, theCard.name)
-                                .replace('<rarity>', theCard.rarity)
-                                .replace('<colors>', theCard.color)
-                                .replace('<id>', theCard.id);
+                    var tempTemplate = tableTemplate.replace(/<cardname>/g, Card.name)
+                                .replace('<rarity>', Card.rarity)
+                                .replace('<colors>', Card.color())
+                                .replace('<id>', Card.id);
                     
                     
                     // the temporary one will now be put into our big string to add to the table

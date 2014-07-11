@@ -4,7 +4,7 @@
 
 // Some are also persistent, and others are not.
 
-var ArtifactCards = function(){
+var ArtifactCards = function(name, rarity, cost, persistence, effects, colorArray){
     // these will probably have functions written out to assign properly from JSON
     this.name = "";
     this.rarity = "";
