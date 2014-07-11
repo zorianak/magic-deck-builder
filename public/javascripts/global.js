@@ -44,15 +44,18 @@ function populateTable(cardType) {
                 
                 // so we want to basically init our creature card
                 var Card = new CreatureCards(this);
-                console.log('theCard ');
-                console.log(Card.color());
+                
+                // So the way that the color is returned is kind of ugly. So
+                // let's just take each and add a space and format it nicely
+                // into a string.
+                var colString = Card.color().join(', ');
                 
                 if ( Card !== -1) {
 
                     // replace everything from the table template and push it into a temporary one
                     var tempTemplate = tableTemplate.replace(/<cardname>/g, Card.name)
                                 .replace('<rarity>', Card.rarity)
-                                .replace('<colors>', Card.color())
+                                .replace('<colors>', colString)
                                 .replace('<id>', Card.id);
                     
                     
