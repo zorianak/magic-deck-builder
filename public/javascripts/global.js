@@ -1,5 +1,8 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
+    
+    // initialize our Card script
+    Card.init();
 
     // Populate the user table on initial page load
     populateTable('all');
@@ -65,11 +68,12 @@ function populateTable(cardType) {
             // We also want to determine the color(s) of the cards
             $.each(data, function(){
                 console.log(this.name);
-                var theCard = Card.createCard(this);
+                var theCard = new Card.createCard(this);
+                console.log('theCard ');
                 console.log(theCard);
                 
                 if ( theCard !== -1) {
-                    console.log('cardFactory this: ' + theCard.name);
+                    console.log('cardFactory this: ' + theCard.color);
 
                     // replace everything from the table template and push it into a temporary one
                     var tempTemplate = tableTemplate.replace(/<cardname>/g, theCard.name)
