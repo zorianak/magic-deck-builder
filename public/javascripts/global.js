@@ -10,4 +10,10 @@ $(document).ready(function() {
     // Add Card button click
     $('#btnAddCard').on('click', addCard);
 
+    // When we click a menu item, we want to query for that card
+    $('#nav').on('click', function(e) {
+        e.preventDefault();
+        var goHere = e.target.rel;
+        displayPage(goHere);
+      });
 });
