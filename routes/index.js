@@ -12,7 +12,7 @@ router.get('/cards/cardlist', function(req, res) {
     
     var reqColor = req.query.color;
     var query = {};
-    query[reqColor] = 1;
+    query[reqColor] = '1';
     console.log(query);
     
     // so test for color param
@@ -26,6 +26,7 @@ router.get('/cards/cardlist', function(req, res) {
             console.log(items);
             res.json(items);
         });
+        
     } else {
         console.log('Color is undefined');
         db.collection('creaturecards').find().toArray(function (err, items) {

@@ -11,14 +11,20 @@ function displayPage(goHere) {
         type: 'GET',
         url: theUrl,
         dataType: 'json',
+        jsonp: 'jsonp',
+        sucess: function(data) {
+            console.log('success', data);
+        },
         error: function(xhr,status,error){ alert(status); }
     }).done(function( response ) {
 
             // Check for a successful (blank) response
             if (response.msg === '') {
+                populateTable();
             }
             else {
                 alert('Error: ' + response.msg);
+                console.log(data);
             }
 
             // Update the table
