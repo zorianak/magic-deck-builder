@@ -1,0 +1,31 @@
+/* line 3, ../sass/global.scss */
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+/* line 8, ../sass/global.scss */
+a {
+  color: #00B7FF;
+}
+
+/* line 13, ../sass/global.scss */
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: "";
+  clear: both;
+  height: 0;
+}
+
+/* line 3, ../sass/nav.scss */
+ul#nav {
+  list-style-type: none;
+  padding: 0;
+}
+/* line 7, ../sass/nav.scss */
+ul#nav li {
+  float: left;
+  padding: 5px;
+}
